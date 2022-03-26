@@ -99,21 +99,23 @@ class XboxController(object):
 
 if __name__ == '__main__':
     joy = XboxController()
+
     while True:
         clearConsole()
-        print(joy.read())
+        x, y, f = joy.read()
+        print(x, ', ', y, ', ', z)
         dx = 0
         dy = 0
-        if(abs(joy.read()[0]) > deadband):
-            if(joy.read()[0] > deadband):
+        if(abs(x) > deadband):
+            if(x > deadband):
                 dx = 10
-            elif(joy.read()[0] < deadband):
+            elif(x < deadband):
                 dx = -10
-        if(abs(joy.read()[1]) > deadband):
-            if(joy.read()[1] > deadband):
+        if(abs(y) > deadband):
+            if(y > deadband):
                 dy = -10
-            elif(joy.read()[1] < deadband):
+            elif(y < deadband):
                 dy = 10
-        if(joy.read()[2]):
+        if(f):
             myTurret.fire()
         myTurret.adjust(dx, dy)
