@@ -108,12 +108,18 @@ while True:
         cv2.rectangle(small_frame, (left, top), (right, bottom), (0, 0, 255), 2)
 
         # Draw a label with a name below the face
-        cv2.rectangle(small_frame, (left, bottom - 35), (right, bottom), (0, 0, 255), cv2.FILLED)
-        font = cv2.FONT_HERSHEY_DUPLEX
-        cv2.putText(small_frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
+        # cv2.rectangle(small_frame, (left, bottom - 35), (right, bottom), (0, 0, 255), cv2.FILLED)
 
-        #circles	= cv2.HoughCircles(image, method, dp, minDist[, param1[, param2[, minRadius[, maxRadius]]]]])
-        # cv2.HoughCircles(small_frame, cv2.HOUGH_GRADIENT,)
+        box_width = right - left
+        box_height = bottom - top
+        line_length = 7
+        line_thickness = 3
+        cv2.rectangle(small_frame, (left - line_length, bottom - round(box_height/2) - line_thickness), (left + line_length, bottom - round(box_height/2) + line_thickness), (0, 0, 255), cv2.FILLED)
+        cv2.rectangle(small_frame, (right - line_length, bottom - round(box_height/2) - line_thickness), (right + line_length, bottom - round(box_height/2) + line_thickness), (0, 0, 255), cv2.FILLED)
+        cv2.rectangle(small_frame, (left + round(box_width/2) - line_thickness, top + line_length), (left + round(box_width/2) + line_thickness, top - line_length), (0, 0, 255), cv2.FILLED)
+        cv2.rectangle(small_frame, (left + round(box_width/2) - line_thickness, bottom + line_length), (left + round(box_width/2) + line_thickness, bottom - line_length), (0, 0, 255), cv2.FILLED)
+        # font = cv2.FONT_HERSHEY_DUPLEX
+        # cv2.putText(small_frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
 
     # Display the resulting image
     cv2.imshow('Video', small_frame)
