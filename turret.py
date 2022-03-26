@@ -1,4 +1,5 @@
 from stepper import Stepper
+import time
 
 class Turret():
     def __init__(self):
@@ -16,3 +17,9 @@ class Turret():
 
     def fire(self):
         self.camStepper.move(True, 800, 0.0001)
+
+if __name__ == "__main__":
+    myTurret = Turret()
+    while True:
+        myTurret.test()
+        time.sleep(2)

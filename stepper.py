@@ -13,11 +13,11 @@ class Stepper():
         self.EN_pin = EN_pin
         self.myMotor = RpiMotorLib.A4988Nema(self.direction_pin, self.step_pin, (21,21,21), "A4988")
         GPIO.setup(EN_pin, GPIO.OUT)   
-        print("Stepper ", str(id), " initialized.")     
+        print("Stepper {} initialized.".format(self.id))     
 
     def move(self, clockwise, num_steps, step_delay):
         GPIO.output(self.EN_pin, GPIO.LOW)
-        print("Stepper ", str(id), " moving ", str(num_steps), " steps. CW = ", str(clockwise))     
+        print("Stepper {} moving {} steps. CW = {}".format(self.id, num_steps, clockwise))     
         self.myMotor.motor_go(clockwise, "1/4", num_steps, step_delay, False, 0.05)
 
     def __del__(self):
