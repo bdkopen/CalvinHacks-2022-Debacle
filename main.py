@@ -5,6 +5,7 @@
 import face_recognition
 import cv2
 import numpy as np
+from turret import Turret
 
 # Get a reference to webcam #0 (the default one)
 video_capture = cv2.VideoCapture(0)
@@ -31,6 +32,8 @@ face_locations = []
 face_encodings = []
 face_names = []
 process_this_frame = True
+
+myTurret = Turret()
 
 while True:
 
@@ -153,13 +156,17 @@ while True:
     tolerance = 5
 
 
+    dx = 0
+    dy = 0
     # Check horizontal position
     if(face_locations_obj_face_center_x > (160)/2 - tolerance and face_locations_obj_face_center_x < (160)/2 + tolerance):
         print("Basically centered horizontally!")
     elif(face_locations_obj_face_center_x > (160)/2):
         print("Move to the left")
+        dx = -10
     elif(face_locations_obj_face_center_x < (160)/2):
         print("Move to the right")
+        dx = 10
     else:
         print("This line should never be reached")
 
@@ -168,11 +175,14 @@ while True:
         print("Basically centered vertically!")
     elif(face_locations_obj_face_center_y > (120)/2):
         print("Move down")
+        dy = -10
     elif(face_locations_obj_face_center_y < (120)/2):
         print("Move up")
+        dy = 10
     else:
         print("This line should never be reached")
-
+    
+    myTurret.adjust(dx, dy)
 
     # Hit 'q' on the keyboard to quit!
     if cv2.waitKey(1) & 0xFF == ord('q'):
