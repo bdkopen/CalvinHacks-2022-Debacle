@@ -7,10 +7,12 @@ import os
 
 myTurret = Turret()
 
+# https://www.delftstack.com/howto/python/python-clear-console/
 clearConsole = lambda: os.system('cls' if os.name in ('nt', 'dos') else 'clear')
 
 deadband = 0.2
 
+# https://stackoverflow.com/questions/46506850/how-can-i-get-input-from-an-xbox-one-controller-in-python
 class XboxController(object):
     MAX_TRIG_VAL = math.pow(2, 8)
     MAX_JOY_VAL = math.pow(2, 15)
@@ -46,10 +48,8 @@ class XboxController(object):
     def read(self): # return the buttons/triggers that you care about in this methode
         x = self.LeftJoystickX
         y = self.LeftJoystickY
-        a = self.A
-        b = self.X # b=1, x=2
-        rb = self.RightBumper
-        return [x, y, a, b, rb]
+        f = self.RightBumper
+        return [x, y, f]
 
 
     def _monitor_controller(self):
@@ -114,4 +114,6 @@ if __name__ == '__main__':
                 dy = -10
             elif(joy.read()[1] < deadband):
                 dy = 10
+        if(joy.read()[2]):
+            myTurret.fire()
         myTurret.adjust(dx, dy)
