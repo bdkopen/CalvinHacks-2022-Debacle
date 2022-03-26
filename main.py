@@ -5,8 +5,9 @@
 import face_recognition
 import cv2
 import numpy as np
-from turret import Turret
 import argparse
+from turret import Turret
+from leds import leds
 
 parser = argparse.ArgumentParser(description='Display Visualization')
 parser.add_argument('visualize', metavar='V', type=int, nargs='+',
@@ -40,6 +41,11 @@ face_names = []
 process_this_frame = True
 
 myTurret = Turret()
+l = leds(10)
+red = (255, 0, 0)
+green = (0, 255, 0)
+blue = (0, 0, 255)
+l.flash(0.5, red)
 
 while True:
 
@@ -162,7 +168,7 @@ while True:
     ####################################
 
     #How many pixels of tolerance we want to give as error
-    tolerance = 5
+    tolerance = 10
 
 
     dx = 0
@@ -171,11 +177,14 @@ while True:
         # Check horizontal position
         if(face_locations_obj_face_center_x > (640/scale_size)/2 - tolerance and face_locations_obj_face_center_x < (640/scale_size)/2 + tolerance):
             print("Basically centered horizontally!")
+            l.flash(0.05, red)
         elif(face_locations_obj_face_center_x > (640/scale_size)/2):
             print("Move to the right")
             dx = 10
+            l.flash(0.05, blue)
         elif(face_locations_obj_face_center_x < (640/scale_size)/2):
             print("Move to the left")
+            l.flash(0.05, green)
             dx = -10
         else:
             print("This line should never be reached")
